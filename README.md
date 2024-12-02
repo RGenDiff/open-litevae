@@ -94,17 +94,12 @@ All metrics are computed on the full ImageNet-1k validation set (50k images) usi
       <th rowspan="2">Method</th>
       <th rowspan="2"> Disc Type </th>
       <th colspan="3">Loss Weights</th>
-      <th colspan="4">Evaluation 128x128</th>
       <th colspan="4">Evaluation 256x256</th>
     </tr>
     <tr>
       <th>w<sub>kl</sub></th>
       <th>w<sub>wave</sub></th>
       <th>w<sub>gauss</sub></th>
-      <th>LPIPS</th>
-      <th>PSNR</th>
-      <th>rFID</th>
-      <th>SSIM</th>
       <th>LPIPS</th>
       <th>PSNR</th>
       <th>rFID</th>
@@ -119,11 +114,6 @@ All metrics are computed on the full ImageNet-1k validation set (50k images) usi
       <td>?</td>
       <td>N/A</td>
       <td>N/A</td>
-      <!-- 128x128 -->
-      <td>--</td>
-      <td>--</td>
-      <td>--</td>
-      <td>--</td>
       <!-- 256x256 -->
       <td>0.069</td>
       <td>29.25</td>
@@ -137,11 +127,6 @@ All metrics are computed on the full ImageNet-1k validation set (50k images) usi
       <td>?</td>
       <td>?</td>
       <td>?</td>
-      <!-- 128x128 -->
-      <td>--</td>
-      <td>--</td>
-      <td>--</td>
-      <td>--</td>
       <!-- 256x256 -->
       <td>0.069</td>
       <td>29.55</td>
@@ -155,11 +140,6 @@ All metrics are computed on the full ImageNet-1k validation set (50k images) usi
       <td>0.01</td>
       <td>0.1</td>
       <td>0.1</td>
-      <!-- 128x128 -->
-      <td>0.077</td>
-      <td>28.35</td>
-      <td>3.78</td>
-      <td>0.85</td>
       <!-- 256x256 -->
       <td>0.081</td>
       <td>29.38</td>
@@ -173,11 +153,6 @@ All metrics are computed on the full ImageNet-1k validation set (50k images) usi
       <td>0.01</td>
       <td>1.0</td>
       <td>0.5</td>
-      <!-- 128x128 -->
-      <td>0.080</td>
-      <td>28.76</td>
-      <td>3.37</td>
-      <td>0.86</td>
       <!-- 256x256 -->
       <td>0.084</td>
       <td>29.78</td>
