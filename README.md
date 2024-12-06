@@ -8,6 +8,20 @@ Implementation of **"[LiteVAE: Lightweight and Efficient Variational Autoencoder
 #### Note
 This implementation was independently developed **before the authors provided pseudocode** in the appendix of their paper. As a result, the approach here may differ slightly in details but adheres to the paper's methodology and goals.
 
+
+## Please Cite the Original Paper
+
+```
+@inproceedings{
+sadat2024litevae,
+title={Lite{VAE}: Lightweight and Efficient Variational Autoencoders for Latent Diffusion Models},
+author={Seyedmorteza Sadat and Jakob Buhmann and Derek Bradley and Otmar Hilliges and Romann M. Weber},
+booktitle={The Thirty-eighth Annual Conference on Neural Information Processing Systems},
+year={2024},
+url={https://openreview.net/forum?id=mTAbl8kUzq}
+}
+```
+
 ---
 ## Comparisons 
 
@@ -164,6 +178,34 @@ All metrics are computed on the full ImageNet-1k validation set (50k images) usi
 
 ---
 
+## Repository Structure
+
+```
+configs/         
+    - Configuration files for setting up the experiments and models.
+
+olvae/
+    - Main directory for the Open LiteVAE project.
+    ├── data/        
+    │   - Contains the dataloader for data preparation and augmentation. 
+    ├── models/      
+    │   - Contains PyTorch Lightning models for training and evaluation. 
+    ├── modules/     
+        - Contains model-specific layers and architectures.
+        ├── litevae/
+        │   - Specialized layers for the LiteVAE model. 
+        ├── basicgan/
+        │   - Common GAN components and loss functions [include PatchGAN discriminator]. 
+        ├── gigagan/
+        │   - Layers specific to the GigaGAN discriminator. 
+        ├── unetgan/
+        │   - Layers and components for the UnetGAN discriminator. 
+
+scripts/
+    - Code for evaluation, testing, and utilities.
+```
+
+---
 
 ## Prerequisites
 - Python >= 3.9
@@ -175,6 +217,7 @@ All metrics are computed on the full ImageNet-1k validation set (50k images) usi
 
 ## TODO
 
+- [ ] Add Setup Documentation
 - [ ] Add Description of Improved Methods
 - [ ] Add Training Code
 - [ ] Add Evaluation Code
@@ -182,17 +225,8 @@ All metrics are computed on the full ImageNet-1k validation set (50k images) usi
 
 ---
 
+## References 
 
-## Please Cite the Original Paper
 
-```
-@inproceedings{
-sadat2024litevae,
-title={Lite{VAE}: Lightweight and Efficient Variational Autoencoders for Latent Diffusion Models},
-author={Seyedmorteza Sadat and Jakob Buhmann and Derek Bradley and Otmar Hilliges and Romann M. Weber},
-booktitle={The Thirty-eighth Annual Conference on Neural Information Processing Systems},
-year={2024},
-url={https://openreview.net/forum?id=mTAbl8kUzq}
-}
-```
+
 
