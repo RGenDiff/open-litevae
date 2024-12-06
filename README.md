@@ -23,9 +23,7 @@ url={https://openreview.net/forum?id=mTAbl8kUzq}
 ```
 
 ---
-## Comparisons 
-
-#### Model Configurations
+## Model Configurations 
 
 Comparison of model configurations for n<sub>z</sub>=12.
 
@@ -95,6 +93,50 @@ Comparison of model configurations for n<sub>z</sub>=12.
     </tr>
   </tbody>
 </table>
+
+
+Comparison of Discriminators 
+
+<table>
+<thead>
+	 <tr>
+     <th> Model </th>
+     <th> Params </th>
+     <th> FLOPs </th>
+     <th> Config (256x256) </th>
+     </tr>
+</thead>
+<tbody>
+	<tr>
+    <td> PatchGAN </td>
+    <td> 2.77M </td>
+    <td> 3.15G </td>
+    <td> n<sub>layers</sub>=3, n<sub>df</sub>=64 </td>
+    </tr>
+	<tr>
+    <td> GigaGAN </td>
+    <td> 14.38M </td>
+    <td> 3.23G </td>
+    <td> C<sub>base</sub>=4096, C<sub>max</sub>=256, n<sub>blocks</sub>=2, attn=[8,16] </td>
+    </tr>
+	<tr>
+    <td> UNetGAN-S </td>
+    <td> 2.75M  </td>
+    <td> 2.31G </td>
+    <td> D<sub>ch</sub>=16, attn=None </td>
+    </tr>
+	<tr>
+    <td> UNetGAN-M </td>
+    <td> 11.0M </td>
+    <td> 9.13G </td>
+    <td> D<sub>ch</sub>=32, attn=None </td>
+    </tr>
+</tbody>
+</table>
+
+---
+
+## Comparisons
 
 #### Evaluation Metrics
 
@@ -175,6 +217,7 @@ All metrics are computed on the full ImageNet-1k validation set (50k images) usi
     </tr>
   </tbody>
 </table>
+
 
 ---
 
