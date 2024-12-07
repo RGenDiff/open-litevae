@@ -25,7 +25,10 @@ url={https://openreview.net/forum?id=mTAbl8kUzq}
 ---
 ## Model Configurations 
 
-Comparison of model configurations for n<sub>z</sub>=12.
+
+### Encoder
+
+Comparison of encoder model configurations for n<sub>z</sub>=12, following the structure proposed by LiteVAE. FLOPs are reported for a resolution of 256x256.
 
 <table>
   <thead>
@@ -46,11 +49,11 @@ Comparison of model configurations for n<sub>z</sub>=12.
       <th>Blocks</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody align="center">
     <tr>
       <td>S</td>
-      <td>1.03 M</td>
-      <td>0.97 M</td>
+      <td align="right">1.03 M</td>
+      <td align="right">0.97 M</td>
       <td>16</td>
       <td>[1,2,2]</td>
       <td>3</td>
@@ -60,8 +63,8 @@ Comparison of model configurations for n<sub>z</sub>=12.
     </tr>
     <tr>
       <td>B</td>
-      <td>6.75 M</td>
-      <td>6.6 M</td>
+      <td align="right">6.75 M</td>
+      <td align="right">6.60 M</td>
       <td>32</td>
       <td>[1,2,3]</td>
       <td>4</td>
@@ -71,8 +74,8 @@ Comparison of model configurations for n<sub>z</sub>=12.
     </tr>
         <tr>
       <td>M</td>
-      <td>32.75 M</td>
-      <td>34 M </td>
+      <td align="right">32.75 M</td>
+      <td align="right">34.00 M </td>
       <td>64</td>
       <td>[1,2,4]</td>
       <td>5</td>
@@ -82,8 +85,8 @@ Comparison of model configurations for n<sub>z</sub>=12.
     </tr>
       <tr>
       <td>L</td>
-      <td>41.42 M</td>
-      <td>41.15 M</td>
+      <td align="right">41.42 M</td>
+      <td align="right">41.15 M</td>
       <td>64</td>
       <td>[1,2,4]</td>
       <td>5</td>
@@ -95,7 +98,47 @@ Comparison of model configurations for n<sub>z</sub>=12.
 </table>
 
 
-Comparison of Discriminators 
+### Decoder
+
+We follow LiteVAE basing our decoder on the SD VAE, replacing Conv-Norm pairs with SMC layers. Skip connections retain the original Conv2d as they are used to adapt feature dimensions. We also remove the single-headed attention layer from the VAE in place of an additional ResNet block since this layer has little effect and limits the decoder resolution. FLOPs are reported for a resolution of 256x256.
+
+<table>
+<thead>
+	 <tr>
+     <th> Model </th>
+     <th> Params </th>
+     <th> FLOPs </th>
+     <th> C </th>
+     <th> Mult </th>
+     <th> Blocks </th>
+     <th> Attn </th>
+     </tr>
+</thead>
+<tbody align="center">
+	<tr>
+    <td> SDVAE </td>
+    <td align="right"> 49.49 M </td>
+    <td align="right"> 312 G </td>
+    <td> 128 </td>
+    <td> [1,2,4,4] + 4 </td>
+    <td> [3,3,3,3] + 2 </td>
+    <td> [ ] + 1 </td>
+    </tr>
+	<tr>
+    <td> Ours </td>
+    <td align="right"> 53.33 M </td>
+    <td align="right"> 324 G </td>
+    <td> 128 </td>
+    <td> [1,2,4,4] + 4 </td>
+    <td> [3,3,3,3] + 3 </td>
+    <td> None </td>
+    </tr>
+</tbody>
+</table>
+
+### Discriminator
+
+Comparison of Discriminators, scaled to roughly match FLOPs between variants. Notably the GigaGAN discriminator contains more parameters due to the multiple predictor levels and soft filter-bank convolution layers. FLOPs are reported for a resolution of 256x256.
 
 <table>
 <thead>
@@ -106,33 +149,35 @@ Comparison of Discriminators
      <th> Config (256x256) </th>
      </tr>
 </thead>
-<tbody>
+<tbody align="center">
 	<tr>
     <td> PatchGAN </td>
-    <td> 2.77M </td>
-    <td> 3.15G </td>
+    <td align="right"> 2.77M </td>
+    <td align="right"> 3.15G </td>
     <td> n<sub>layers</sub>=3, n<sub>df</sub>=64 </td>
     </tr>
 	<tr>
     <td> GigaGAN </td>
-    <td> 14.38M </td>
-    <td> 3.23G </td>
+    <td align="right"> 14.38M </td>
+    <td align="right"> 3.23G </td>
     <td> C<sub>base</sub>=4096, C<sub>max</sub>=256, n<sub>blocks</sub>=2, attn=[8,16] </td>
     </tr>
 	<tr>
     <td> UNetGAN-S </td>
-    <td> 2.75M  </td>
-    <td> 2.31G </td>
+    <td align="right"> 2.75M  </td>
+    <td align="right"> 2.31G </td>
     <td> D<sub>ch</sub>=16, attn=None </td>
     </tr>
 	<tr>
     <td> UNetGAN-M </td>
-    <td> 11.0M </td>
-    <td> 9.13G </td>
+    <td align="right"> 11.0M </td>
+    <td align="right"> 9.13G </td>
     <td> D<sub>ch</sub>=32, attn=None </td>
     </tr>
 </tbody>
 </table>
+
+
 
 ---
 
@@ -142,7 +187,7 @@ Comparison of Discriminators
 
 Evaluation metrics were computed on the ImageNet training set with the B-Scale encoder using n<sub>z</sub>=12. Training is conducted in two phases: A) pre-training at 128x128 with no discriminator for 100k steps, B) finetuning at 256x256 with discriminator for 50k steps. 
 
-All metrics are computed on the full ImageNet-1k validation set (50k images) using bi-cubic rescaling and center cropping.
+All metrics are computed on the full ImageNet-1k validation set (50k images) using bi-cubic rescaling and center cropping. Comparing reported VAE (retrained SDVAE) and LiteVAE to configurations in this repo.
 
 <table>
   <thead>
@@ -162,10 +207,10 @@ All metrics are computed on the full ImageNet-1k validation set (50k images) usi
       <th>SSIM</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody align="center">
     <tr>
       <td>VAE</td>
-      <td>Stem</td>
+      <td>PatchGAN</td>
       <!-- Weights -->
       <td>?</td>
       <td>N/A</td>
@@ -178,7 +223,7 @@ All metrics are computed on the full ImageNet-1k validation set (50k images) usi
     </tr>
      <tr>
       <td>LiteVAE</td>
-      <td>Stem?</td>
+      <td>UNetGAN-?</td>
       <!-- Weights -->
       <td>?</td>
       <td>?</td>
@@ -250,17 +295,88 @@ scripts/
 
 ---
 
-## Prerequisites
+## Setup
+
+#### Dependencies
 - Python >= 3.9
 - PyTorch >= 2.0
 - Torch-DWT
 
+#### Installation
+
+Install via requirements.txt
+
+```
+pip install -r requirements.txt
+pip install -e .
+```
+
+#### Model Checkpoints
+
+Coming Soon.
+
+---
+
+## Evaluation
+
+Run the `compute_metrics.py` script to compute the evaluation metrics. Will compute LPIPS, PSNR, rFID, and SSIM using the test loader specified in the configuration file. 
+
+Expects the parent directory structure to be in the form `<parent>/checkpoints/last.ckpt` and will search for the `<config.yaml>` in the `<config directory>` which follows from `<parent> = <timestamp>_<config>_<precision>`. This search will still work if the timestamp and precision are not included as `<config>` is extracted by splitting on `_` and removing the first and last element in the list. 
+
+```bash
+python script/compute_metrics.py --config_base <config directory> -B <batch_size> <run parent directory>
+```
+
+Alternatively, you can specify the configuration and checkpoint directly.
+
+```bash
+python script/compute_metrics.py --config <config.yaml> -B <batch_size> <checkpoint.ckpt>
+```
+
+---
+
+## Training
+
+The example code uses OmegaConfig yaml files to specify and dynamically construct the models. By default, we utilize the WebDataset format to efficiently stream large collections of data from disk, with an interface constructor for `train_loader()`, `val_loader()`, and `test_loader()`. Notably, this pattern can wrap other dataloader types such as the typical ImageDataset or a default torchvision dataset. 
+
+Training utilizes Pytorch Lightning to handle multi-GPU communication, mixed-precision training, and gradient accumulation. As such, training becomes relatively simple. The current codebase supports training in full FP32 (32), half precision (16), and bfloat (bf16).
+
+```
+python train.py --base <config.yaml> \
+                --logdir <log directory> \
+                --precision <training precision> \
+                --gpus <gpu count or list> \
+                --seed <random seed> \
+                --name <config_name> 
+```
+
+This codebase also supports resuming from a stopped run. **Note:** we recommend changing the random seed when resuming.
+
+```
+python train.py --base <config.yaml> \
+                --logdir <log directory> \
+                --precision <training precision> \
+                --gpus <gpu count or list> \
+                --seed <random seed> \
+                --resume <previous run directory>
+```
+
+For transitioning between PhaseA and PhaseB training, we recommend using `--actual_resume` which will reset the optimizer states. This trick is adapted from **[Textual-Inversion](https://github.com/rinongal/textual_inversion)**.
+
+```
+python train.py --base <config.yaml> \
+                --logdir <log directory> \
+                --precision <training precision> \
+                --gpus <gpu count or list> \
+                --seed <random seed> \
+                --actual_resume <previous.ckpt> \
+                --name <config_name> 
+```
 
 ---
 
 ## TODO
 
-- [ ] Add Setup Documentation
 - [ ] Add Description of Improved Methods
 - [ ] Add Training Code
 - [ ] Add Evaluation Code
@@ -268,8 +384,67 @@ scripts/
 
 ---
 
-## References 
 
+## References
 
+#### LiteVAE
 
+```
+@inproceedings{
+sadat2024litevae,
+title={Lite{VAE}: Lightweight and Efficient Variational Autoencoders for Latent Diffusion Models},
+author={Seyedmorteza Sadat and Jakob Buhmann and Derek Bradley and Otmar Hilliges and Romann M. Weber},
+booktitle={The Thirty-eighth Annual Conference on Neural Information Processing Systems},
+year={2024},
+url={https://openreview.net/forum?id=mTAbl8kUzq}
+}
+```
+
+#### SD-VAE
+
+```
+@article{Rombach2021HighResolutionIS,
+  title={High-Resolution Image Synthesis with Latent Diffusion Models},
+  author={Robin Rombach and A. Blattmann and Dominik Lorenz and Patrick Esser and Bj{\"o}rn Ommer},
+  journal={2022 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  year={2021},
+  pages={10674-10685},
+}
+```
+
+#### PatchGAN
+
+```
+@article{Isola2016ImagetoImageTW,
+  title={Image-to-Image Translation with Conditional Adversarial Networks},
+  author={Phillip Isola and Jun-Yan Zhu and Tinghui Zhou and Alexei A. Efros},
+  journal={2017 IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+  year={2016},
+  pages={5967-5976},
+}
+```
+
+#### GigaGAN
+
+```
+@article{Kang2023ScalingUG,
+  title={Scaling up GANs for Text-to-Image Synthesis},
+  author={Minguk Kang and Jun-Yan Zhu and Richard Zhang and Jaesik Park and Eli Shechtman and Sylvain Paris and Taesung Park},
+  journal={2023 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  year={2023},
+  pages={10124-10134},
+}
+```
+
+#### U-NetGAN
+
+```
+@article{Schnfeld2020AUB,
+  title={A U-Net Based Discriminator for Generative Adversarial Networks},
+  author={Edgar Sch{\"o}nfeld and Bernt Schiele and Anna Khoreva},
+  journal={2020 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+  year={2020},
+  pages={8204-8213},
+}
+```
 
