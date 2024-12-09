@@ -8,7 +8,7 @@ import numpy as np
 import math
 import torch.nn.functional as F
 from functools import partial
-import layers
+from . import layers
 
 def D_unet_arch(ch=64, attention='64',ksize='333333', dilation='111111',out_channel_multiplier=1):
     arch = {}

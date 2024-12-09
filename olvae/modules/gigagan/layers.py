@@ -8,7 +8,7 @@ from einops import rearrange, repeat, reduce
 import torch.nn.functional as F
 from abc import abstractmethod
 
-from attention import SpatialTransformer
+from .attention import SpatialTransformer
 
 def exists(x):
     return x is not None

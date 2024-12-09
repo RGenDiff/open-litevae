@@ -187,7 +187,7 @@ Comparison of Discriminators, scaled to roughly match FLOPs between variants. No
 
 Evaluation metrics were computed on the ImageNet training set with the B-Scale encoder using n<sub>z</sub>=12. Training is conducted in two phases: A) pre-training at 128x128 with no discriminator for 100k steps, B) finetuning at 256x256 with discriminator for 50k steps. 
 
-All metrics are computed on the full ImageNet-1k validation set (50k images) using bi-cubic rescaling and center cropping. Comparing reported VAE (retrained SDVAE) and LiteVAE to configurations in this repo.
+All metrics are computed on the full ImageNet-1k validation set (50k images) using bi-cubic rescaling and center cropping. Comparing reported VAE (retrained SDVAE) and LiteVAE to configurations in this repo. Also showing the SD1-MSE VAE (n<sub>z</sub>=4) and SD3-VAE (n<sub>z</sub>=16).
 
 <table>
   <thead>
@@ -209,6 +209,32 @@ All metrics are computed on the full ImageNet-1k validation set (50k images) usi
   </thead>
   <tbody align="center">
     <tr>
+      <td>SD1-VAE</td>
+      <td>PatchGAN</td>
+      <!-- Weights -->
+      <td>?</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <!-- 256x256 -->
+      <td>0.138</td>
+      <td>25.70</td>
+      <td>0.75</td>
+      <td>0.72</td>
+    </tr>
+    <tr>
+      <td>SD3-VAE</td>
+      <td>PatchGAN?</td>
+      <!-- Weights -->
+      <td>?</td>
+      <td>N/A</td>
+      <td>N/A</td>
+      <!-- 256x256 -->
+      <td><b>0.069</b></td>
+      <td>29.59</td>
+      <td><b>0.22</b></td>
+      <td>0.86</td>
+    </tr>
+    <tr>
       <td>VAE</td>
       <td>PatchGAN</td>
       <!-- Weights -->
@@ -216,7 +242,7 @@ All metrics are computed on the full ImageNet-1k validation set (50k images) usi
       <td>N/A</td>
       <td>N/A</td>
       <!-- 256x256 -->
-      <td>0.069</td>
+      <td><b>0.069</b></td>
       <td>29.25</td>
       <td>0.95</td>
       <td>0.86</td>
@@ -229,10 +255,10 @@ All metrics are computed on the full ImageNet-1k validation set (50k images) usi
       <td>?</td>
       <td>?</td>
       <!-- 256x256 -->
-      <td>0.069</td>
+      <td><b>0.069</b></td>
       <td>29.55</td>
       <td>0.94</td>
-      <td>0.87</td>
+      <td><b>0.87</b></td>
     </tr>
     <tr>
       <td>A1 (Ours)</td>
@@ -259,6 +285,32 @@ All metrics are computed on the full ImageNet-1k validation set (50k images) usi
       <td>29.78</td>
       <td>1.12</td>
       <td>0.86</td>
+    </tr>
+    <tr>
+      <td>B0 (Ours)</td>
+      <td> None </td>
+      <!-- Weights -->
+      <td>0.01</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <!-- 256x256 -->
+      <td>0.076</td>
+      <td><b>30.03</b></td>
+      <td>1.29</td>
+      <td>0.86</td>
+    </tr>
+    <tr>
+      <td>B1 (Ours)</td>
+      <td> PatchGAN </td>
+      <!-- Weights -->
+      <td>0.01</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <!-- 256x256 -->
+      <td>0.080</td>
+      <td>29.12</td>
+      <td>0.30</td>
+      <td>0.84</td>
     </tr>
   </tbody>
 </table>

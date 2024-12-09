@@ -8,8 +8,8 @@ from inspect import isfunction
 from einops import rearrange, repeat, reduce
 import torch.nn.functional as F
 
-from attention import SpatialTransformer
-from layers import TimestepEmbedSequential, BatchNorm2d, AdaptiveConv, Conv2d
+from .attention import SpatialTransformer
+from .layers import TimestepEmbedSequential, BatchNorm2d, AdaptiveConv, Conv2d
 
 
 _USE_SPECTRAL = True
