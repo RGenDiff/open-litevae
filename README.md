@@ -28,18 +28,20 @@ url={https://openreview.net/forum?id=mTAbl8kUzq}
 
 ### Encoder
 
-Comparison of encoder model configurations for n<sub>z</sub>=12, following the structure proposed by LiteVAE. FLOPs are reported for a resolution of 256x256.
+Comparison of encoder model configurations for n<sub>z</sub>=12, following the structure proposed by LiteVAE. FLOPs are reported for a resolution of 256x256. For comparison, the SD-VAE encoder is 34.16 M parameters and uses 137 GFLOPs at 256x156. LiteVAE showed equivelent performance with the B-scale encoder when matching n<sub>z</sub>.
 
 <table>
   <thead>
     <tr>
       <th rowspan="2">Scale</th>
       <th rowspan="1" colspan="2">Parameter Count</th>
+      <th rowspan="1">FLOPs</th>
       <th colspan="3">Extractor</th>
       <th colspan="3">Aggregator</th>
     </tr>
     <tr>
     <th>LiteVAE</th>
+     <th> Ours </th>
      <th> Ours </th>
       <th>C</th>
       <th>Mult</th>
@@ -54,6 +56,7 @@ Comparison of encoder model configurations for n<sub>z</sub>=12, following the s
       <td>S</td>
       <td align="right">1.03 M</td>
       <td align="right">0.97 M</td>
+      <td align="right"> 5.5 G </td>
       <td>16</td>
       <td>[1,2,2]</td>
       <td>3</td>
@@ -65,6 +68,7 @@ Comparison of encoder model configurations for n<sub>z</sub>=12, following the s
       <td>B</td>
       <td align="right">6.75 M</td>
       <td align="right">6.60 M</td>
+      <td align="right"> 37.4 G </td>
       <td>32</td>
       <td>[1,2,3]</td>
       <td>4</td>
@@ -76,6 +80,7 @@ Comparison of encoder model configurations for n<sub>z</sub>=12, following the s
       <td>M</td>
       <td align="right">32.75 M</td>
       <td align="right">34.00 M </td>
+      <td align="right"> 234.9 G </td>
       <td>64</td>
       <td>[1,2,4]</td>
       <td>5</td>
@@ -87,6 +92,7 @@ Comparison of encoder model configurations for n<sub>z</sub>=12, following the s
       <td>L</td>
       <td align="right">41.42 M</td>
       <td align="right">41.15 M</td>
+      <td align="right"> 242.1 G</td>
       <td>64</td>
       <td>[1,2,4]</td>
       <td>5</td>
@@ -187,7 +193,7 @@ Comparison of Discriminators, scaled to roughly match FLOPs between variants. No
 
 Evaluation metrics were computed on the ImageNet training set with the B-Scale encoder using n<sub>z</sub>=12. Training is conducted in two phases: A) pre-training at 128x128 with no discriminator for 100k steps, B) finetuning at 256x256 with discriminator for 50k steps. 
 
-All metrics are computed on the full ImageNet-1k validation set (50k images) using bi-cubic rescaling and center cropping. Comparing reported VAE (retrained SDVAE) and LiteVAE to configurations in this repo. Also showing the SD1-MSE VAE (n<sub>z</sub>=4) and SD3-VAE (n<sub>z</sub>=16).
+All metrics are computed on the full ImageNet-1k validation set (50k images) using bi-cubic rescaling and center cropping. Comparing reported VAE (retrained SDVAE) and LiteVAE to configurations in this repo. Also showing the SD1-MSE VAE (n<sub>z</sub>=4) and SD3-VAE (n<sub>z</sub>=16). Notably, results seem to be highly dependent on loss weights (including discriminator), trading rFID for LPIPS, PSNR, and SSIM.
 
 <table>
   <thead>
@@ -311,6 +317,32 @@ All metrics are computed on the full ImageNet-1k validation set (50k images) usi
       <td>29.12</td>
       <td>0.30</td>
       <td>0.84</td>
+    </tr>
+    <tr>
+      <td>B2 (Ours)</td>
+      <td> GigaGAN </td>
+      <!-- Weights -->
+      <td>0.01</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <!-- 256x256 -->
+      <td>0.077</td>
+      <td>29.54</td>
+      <td>0.45</td>
+      <td>0.85</td>
+    </tr>
+    <tr>
+    <td>B2 (Ours)</td>
+      <td> UNetGAN-S </td>
+      <!-- Weights -->
+      <td>0.01</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <!-- 256x256 -->
+      <td>0.080</td>
+      <td>29.15</td>
+      <td>0.38</td>
+      <td>0.85</td>
     </tr>
   </tbody>
 </table>
