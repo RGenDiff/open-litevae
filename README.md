@@ -326,13 +326,13 @@ All metrics are computed on the full ImageNet-1k validation set (50k images) usi
       <td>1.0</td>
       <td>0.5</td>
       <!-- 256x256 -->
-      <td>0.077</td>
-      <td>29.54</td>
-      <td>0.45</td>
+      <td>0.080</td>
+      <td>29.27</td>
+      <td>0.31</td>
       <td>0.85</td>
     </tr>
     <tr>
-    <td>B2 (Ours)</td>
+    <td>B3 (Ours)</td>
       <td> UNetGAN-S </td>
       <!-- Weights -->
       <td>0.01</td>
