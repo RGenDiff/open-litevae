@@ -360,6 +360,11 @@ All metrics are computed on the full ImageNet-1k validation set (50k images) usi
   </tbody>
 </table>
 
+
+#### Latent Distributions
+
+![Latent Distribution Comparison](assets/Litevae_ldist.svg)
+
 #### Comparison Findings
 
 - We achieve similar results to the original LiteVAE paper, which are in turn competitive with the SD3-VAE, with differences that can be attributed to the value of n<sub>z</sub>.
