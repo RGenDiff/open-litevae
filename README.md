@@ -344,8 +344,28 @@ All metrics are computed on the full ImageNet-1k validation set (50k images) usi
       <td>0.38</td>
       <td>0.85</td>
     </tr>
+    <tr>
+    <td>B4 (Ours)</td>
+      <td> UNetGAN-M </td>
+      <!-- Weights -->
+      <td>0.01</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <!-- 256x256 -->
+      <td>0.080</td>
+      <td>29.07</td>
+      <td>0.30</td>
+      <td>0.84</td>
+    </tr>
   </tbody>
 </table>
+
+#### Comparison Findings
+
+- We achieve similar results to the original LiteVAE paper, which are in turn competitive with the SD3-VAE, with differences that can be attributed to the value of n<sub>z</sub>.
+- The differing LPIPS and rFID scores from LiteVAE may be attributed to the KL loss weight (w<sub>kl</sub>), where a higher value will result in worse reconstruction but stronger adherence to the latent space unit Gaussian objective.
+- rFID and the other metrics (LPIPS, SSIM, and PSNR) are inversely related, where a better rFID will degrade the other metrics. However, while FID itself has many issues, it appears to be a stronger indicator of image quality compare with the other metrics.
+- Overall, the discriminator type has a minor impact, with the original PatchGAN discriminator performing well. UNetGAN may perform better when considering a larger version, but this becomes difficult to justify given the increased training FLOPs. 
 
 
 ---
