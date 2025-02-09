@@ -1,7 +1,7 @@
 ## open-LiteVAE
 
 ---
-[![arxiv](https://img.shields.io/badge/arXiv-2405.14477-red)](https://arxiv.org/abs/2405.14477)
+[![arxiv](https://img.shields.io/badge/arXiv-2405.14477-red)](https://arxiv.org/abs/2405.14477) [![Hugging Face Collections](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Collections-blue)](https://huggingface.co/collections/RGenDiff/open-litevae-67a83645560939c755d099f7)
  
 Implementation of **"[LiteVAE: Lightweight and Efficient Variational Autoencoders for Latent Diffusion Models](https://openreview.net/forum?id=mTAbl8kUzq)"** [2024]. The paper introduces an efficient wavelet-encoder-based variational autoencoder, which demonstrates a significant performance improvement and stable training compared with previous works. This implementation aims to replicate and extend its findings using GPU-accelerated wavelet transformations (**[torch-dwt](https://github.com/KeKsBoTer/torch-dwt)**), stochastic image rescaling, and improved discriminator models.
 
@@ -180,6 +180,12 @@ Comparison of Discriminators, scaled to roughly match FLOPs between variants. No
     <td align="right"> 9.13G </td>
     <td> D<sub>ch</sub>=32, attn=None </td>
     </tr>
+	<tr>
+    <td> UNetGAN-L </td>
+    <td align="right"> 44.1M  </td>
+    <td align="right"> 36.34G </td>
+    <td> D<sub>ch</sub>=64, attn=None </td>
+    </tr>
 </tbody>
 </table>
 
@@ -355,6 +361,18 @@ All metrics are computed on the full ImageNet-1k validation set (50k images) usi
       <td>0.080</td>
       <td>29.07</td>
       <td>0.30</td>
+      <td>0.84</td>
+    </tr>
+    <td> <a href="https://huggingface.co/RGenDiff/olitevaeB_im_f8c12">B5 (Ours)</a> </td>
+      <td> UNetGAN-L </td>
+      <!-- Weights -->
+      <td>0.01</td>
+      <td>1.0</td>
+      <td>0.5</td>
+      <!-- 256x256 -->
+      <td>0.084</td>
+      <td>28.74</td>
+      <td>0.24</td>
       <td>0.84</td>
     </tr>
   </tbody>
