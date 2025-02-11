@@ -187,19 +187,24 @@ class LiteAutoencoderKL(pl.LightningModule):
 
     def get_input(self, batch, k):
         x = batch[k]
+
+        # if for some reason we have a grayscale image in B,H,W, then convert to B,H,W,C
         if len(x.shape) == 3:
             x = x[..., None]
+
+        # convert to B,C,H,W
         x = x.permute(0, 3, 1, 2).to(memory_format=torch.contiguous_format).float()
         return x
 
     def hold_disc_grads(self, freeze):
         pass
+        # @TODO: to be correct during batch accumulation, we should freeze 
+        #        the discriminator gradients. However, empirical results show
+        #        that the models tend to achieve better metrics when not frozen
         #self.loss.discriminator.requires_grad_(not freeze)
         #self.loss.discriminator.train(not freeze)
 
     def on_train_batch_end(self, *args, **kwargs):
-        if not self.use_ema:
-            return
         
         # Check for NaNs/Infs in gradients
         bad_state_detected = False
@@ -210,16 +215,24 @@ class LiteAutoencoderKL(pl.LightningModule):
 
                 bad_state_detected = True
                 break
-                
-        if not bad_state_detected:
-            if not self.freeze_latent_space:
-                self.encoder_ema(self.encoder) 
-            self.decoder_ema(self.decoder)
-            self.quantizer_ema(self.quantizer)
-        else: # reset broken optimizer states
+       
+        # if there was a bade state, then error out
+        if bad_state_detected:
             # let's just error out for now
             self.bad_state = True
-            assert False
+            assert False, "Network entered a bad training state with inf or NaN values"
+
+        # at this point, the bad_state_detected == False
+
+        # if we're not using EMA, then there's nothing to do
+        if not self.use_ema:
+            return
+
+        # update the EMAs
+        if not self.freeze_latent_space:
+            self.encoder_ema(self.encoder) 
+        self.decoder_ema(self.decoder)
+        self.quantizer_ema(self.quantizer)
     
     def training_step(self, batch, batch_idx, optimizer_idx):
         inputs = self.get_input(batch, self.image_key)
